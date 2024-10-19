@@ -1,0 +1,74 @@
+chapter Typing
+>  ■ < Typing Game > ■ 
+>-----------------------
+>Through this game, You can check your typing speed.
+>-----------------------
+prompt Are+you+ready?+(Press+Enter)+
+
+println 3.. wait 1 println 2.. wait 1 println 1.. wait 1 println Go!!! goto start
+
+
+chapter start
+time start
+println +
+goto q1
+
+chapter q1
+clear 1
+if 0 println Wrong! println +
+clear 0
+chance 50 println >+Austin set 1
+unless 1 println >+Mr.Jueckstock
+prompt Type:+
+if 1 match Austin println Correct! println + goto q2
+unless 1 match Mr.Jueckstock println Correct! println + goto q2
+set 0 goto q1
+
+chapter q2
+clear 2
+if 0 println Wrong! println +
+clear 0
+chance 50 println >+Computer-Science set 2
+unless 2 println >+CpS110
+prompt Type:+
+if 2 match Computer-Science println Correct! println + goto q3
+unless 2 match CpS110 println Correct! println + goto q3
+set 0 goto q2
+
+chapter q3
+clear 3
+if 0 println Wrong! println +
+clear 0
+chance 50 println >+Python set 3
+unless 3 println >+Java
+prompt Type:+
+if 3 match Python println Correct! println + goto q4
+unless 3 match Java println Correct! println + goto q4
+set 0 goto q3
+
+chapter q4
+clear 4
+if 0 println Wrong! println +
+clear 0
+chance 50 println >+Text-Adventure set 4
+unless 4 println >+Adventure
+prompt Type:+
+if 4 match Text-Adventure println Correct! println + goto q5
+unless 4 match Adventure println Correct! println + goto q5
+set 0 goto q4
+
+chapter q5
+clear 5
+if 0 println Wrong! println +
+clear 0
+chance 50 println >+Hello-World set 5
+unless 5 println >+Hello-Space
+prompt Type:+
+if 5 match Hello-World println Correct! println + goto finish
+unless 5 match Hello-Space println Correct! println + goto finish
+set 0 goto q5
+
+chapter finish
+time end
+print You+spend+ time show
+end game

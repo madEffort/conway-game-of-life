@@ -1,0 +1,629 @@
+chapter menu
+>  @ < Conway Game > @ 
+>-----------------------
+> @ Glider
+> @ Blinker (period 2)
+> @ Toad (period 2)
+> @ Beacon (period 2)
+> @ R-pentomino
+> @ My-Conway (Yourself)
+>-----------------------
+prompt What+do+you+want?+
+
+match Glider goto Glider
+match Blinker goto Blinker
+match Toad goto Toad
+match Beacon goto Beacon
+match R-pentomino goto R-pentomino
+match My-Conway goto My-Conway
+
+>
+>!!! You should choose valid item !!!
+>
+goto menu
+
+chapter Start
+>
+chapter First
+visit Clear
+visit GetN
+visit Ask
+
+chapter Ask
+>
+prompt continue?+
+>
+on yes goto First
+on no end game
+> !!! You should say yes or no !!!
+goto Ask
+
+
+chapter Checkxy
+visit Initz
+visit xXyY
+clear XY
+if xy set XY
+
+visit Right
+visit Getxy
+if xy visit z
+
+visit Up
+visit Getxy
+if xy visit z
+
+visit Left
+visit Getxy
+if xy visit z
+
+visit Left
+visit Getxy
+if xy visit z
+
+visit Down
+visit Getxy
+if xy visit z
+
+visit Down
+visit Getxy
+if xy visit z
+
+visit Right
+visit Getxy
+if xy visit z
+
+visit Right
+visit Getxy
+if xy visit z
+
+visit XxYy
+visit ValidLife
+if life visit SetNxy
+return home
+
+chapter ValidLife
+clear life
+unless XY unless z0 unless z1 if z2 if z3 set life return home
+if XY unless z0 unless z1 if z2 set life return home
+return home
+
+chapter Clear
+visit ClearNew
+visit Clearx
+set x3
+visit Cleary
+set y0
+
+chapter PrintAll
+visit Getxy
+visit Printxy
+visit Checkxy
+
+clear celly visit ValidMinus1y
+if validation set celly
+
+visit ValidPlus2x
+unless validation visit Down
+unless validation unless celly print + return home
+unless validation visit Clearx
+
+visit Right
+unless validation println +
+visit Validy
+if validation visit PrintAll 
+return home
+
+chapter Printxy
+unless xy print +'+
+if xy print +@+
+return home
+
+chapter ValidPlus1x
+clear validation
+unless x0 set validation
+if x0 unless x1 unless x2 unless x3 set validation
+return home
+
+chapter ValidPlus2x
+clear validation
+unless x0 set validation
+return home
+
+chapter Validx
+clear validation
+unless x0 set validation
+if x0 unless x1 unless x2 set validation
+return home
+
+chapter Validy
+clear validation
+unless y0 set validation
+if y0 unless y1 unless y2 set validation
+return home
+
+chapter ValidMinus1y
+set validation
+unless y0 unless y1 unless y2 clear validation
+return home
+
+chapter xXyY
+clear X0 clear X1 clear X2 clear X3 clear Y0 clear Y1 clear Y2 clear Y3
+if x0 set X0
+if x1 set X1
+if x2 set X2
+if x3 set X3
+if y0 set Y0
+if y1 set Y1
+if y2 set Y2
+if y3 set Y3
+return home
+
+chapter XxYy
+clear x0 clear x1 clear x2 clear x3 clear y0 clear y1 clear y2 clear y3
+if X0 set x0
+if X1 set x1
+if X2 set x2
+if X3 set x3
+if Y0 set y0
+if Y1 set y1
+if Y2 set y2
+if Y3 set y3
+return home
+
+chapter Clearx
+clear x0 clear x1 clear x2 clear x3
+return home
+
+chapter Cleary
+clear y0 clear y1 clear y2 clear y3
+return home
+
+chapter clearxy
+clear xy
+set changeFlag
+visit Getx
+return home
+
+chapter Setxy
+set xy
+set changeFlag
+visit Getx
+return home
+
+chapter SetNxy
+set xyN
+set changeFlagN
+clear changeFlag
+visit Getx
+return home
+
+chapter Getxy
+clear xy
+visit Getx
+visit $
+visit Gety
+if $ set xy
+return home
+
+chapter Getx
+unless changeFlag unless changeFlagN set setting
+unless x0 unless x1 unless x2 unless x3 goto 0
+unless x0 unless x1 unless x2 if x3 goto 1
+unless x0 unless x1 if x2 unless x3 goto 2
+unless x0 unless x1 if x2 if x3 goto 3
+unless x0 if x1 unless x2 unless x3 goto 4
+unless x0 if x1 unless x2 if x3 goto 5
+unless x0 if x1 if x2 unless x3 goto 6
+unless x0 if x1 if x2 if x3 goto 7
+if x0 unless x1 unless x2 unless x3 goto 8
+if x0 unless x1 unless x2 if x3 goto 9
+return home
+
+chapter Gety
+set setting
+unless y0 unless y1 unless y2 unless y3 goto 0
+unless y0 unless y1 unless y2 if y3 goto 1
+unless y0 unless y1 if y2 unless y3 goto 2
+unless y0 unless y1 if y2 if y3 goto 3
+unless y0 if y1 unless y2 unless y3 goto 4
+unless y0 if y1 unless y2 if y3 goto 5
+unless y0 if y1 if y2 unless y3 goto 6
+unless y0 if y1 if y2 if y3 goto 7
+if y0 unless y1 unless y2 unless y3 goto 8
+if y0 unless y1 unless y2 if y3 goto 9
+return home
+
+chapter Initz
+clear z0 clear z1 clear z2 clear z3
+return home
+
+chapter z
+unless z3 set z3 return home
+unless z2 set z2 clear z3 return home
+unless z1 set z1 clear z2 clear z3 return home
+unless z0 set z0 clear z1 clear z2 clear z3 return home
+return home
+
+chapter Right
+unless x3 set x3 return home
+unless x2 set x2 clear x3 return home
+unless x1 set x1 clear x2 clear x3 return home
+unless x0 set x0 clear x1 clear x2 clear x3 return home
+return home
+
+chapter Left
+if x3 clear x3 return home
+if x2 clear x2 set x3 return home
+if x1 clear x1 set x2 set x3 return home
+if x0 clear x0 set x1 set x2 set x3 return home
+return home
+
+chapter Up
+unless y3 set y3 return home
+unless y2 set y2 clear y3 return home
+unless y1 set y1 clear y2 clear y3 return home
+unless y0 set y0 clear y1 clear y2 clear y3 return home
+return home
+
+chapter Down
+if y3 clear y3 return home
+if y2 clear y2 set y3 return home
+if y1 clear y1 set y2 set y3 return home
+if y0 clear y0 set y1 set y2 set y3 return home
+return home
+
+
+chapter 0
+if setting clear setting return home
+if changeFlag visit Gety 
+if changeFlag clear changeFlag clear 0,$ if xy set 0,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N0,$ if xyN set N0,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 1
+if setting clear setting return home
+if changeFlag visit Gety 
+if changeFlag clear changeFlag clear 1,$ if xy set 1,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N1,$ if xyN set N1,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 2
+if setting clear setting return home
+if changeFlag visit Gety 
+if changeFlag clear changeFlag clear 2,$ if xy set 2,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N2,$ if xyN set N2,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 3
+if setting clear setting return home
+if changeFlag visit Gety 
+if changeFlag clear changeFlag clear 3,$ if xy set 3,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N3,$ if xyN set N3,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 4
+if setting clear setting return home
+if changeFlag visit Gety 
+if changeFlag clear changeFlag clear 4,$ if xy set 4,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N4,$ if xyN set N4,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 5
+if setting clear setting return home
+if changeFlag visit Gety
+if changeFlag clear changeFlag clear 5,$ if xy set 5,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N5,$ if xyN set N5,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 6
+if setting clear setting return home
+if changeFlag visit Gety 
+if changeFlag clear changeFlag clear 6,$ if xy set 6,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N6,$ if xyN set N6,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 7
+if setting clear setting return home
+if changeFlag visit Gety
+if changeFlag clear changeFlag clear 7,$ if xy set 7,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N7,$ if xyN set N7,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 8
+if setting clear setting return home
+if changeFlag visit Gety
+if changeFlag clear changeFlag clear 8,$ if xy set 8,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N8,$ if xyN set N8,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter 9
+if setting clear setting return home
+if changeFlag visit Gety
+if changeFlag clear changeFlag clear 9,$ if xy set 9,$ return home
+if changeFlagN visit Gety 
+if changeFlagN clear changeFlagN clear N9,$ if xyN set N9,$ return home
+visit Clear0to9
+visit CheckIf
+return home
+
+chapter GetN
+visit Clearx
+visit Cleary
+visit ClearFirst
+chapter LoadNew
+visit Getx
+visit $
+if N$,0 set $,0
+if N$,1 set $,1
+if N$,2 set $,2
+if N$,3 set $,3
+if N$,4 set $,4
+if N$,5 set $,5
+if N$,6 set $,6
+if N$,7 set $,7
+if N$,8 set $,8
+if N$,9 set $,9
+
+visit ValidPlus1x
+if validation visit Right
+if validation visit LoadNew
+return home
+
+chapter ClearFirst
+clear 0,0 clear 0,1 clear 0,2 clear 0,3 clear 0,4 clear 0,5 clear 0,6 clear 0,7 clear 0,8 clear 0,9
+clear 1,0 clear 1,1 clear 1,2 clear 1,3 clear 1,4 clear 1,5 clear 1,6 clear 1,7 clear 1,8 clear 1,9
+clear 2,0 clear 2,1 clear 2,2 clear 2,3 clear 2,4 clear 2,5 clear 2,6 clear 2,7 clear 2,8 clear 2,9
+clear 3,0 clear 3,1 clear 3,2 clear 3,3 clear 3,4 clear 3,5 clear 3,6 clear 3,7 clear 3,8 clear 3,9
+clear 4,0 clear 4,1 clear 4,2 clear 4,3 clear 4,4 clear 4,5 clear 4,6 clear 4,7 clear 4,8 clear 4,9
+clear 5,0 clear 5,1 clear 5,2 clear 5,3 clear 5,4 clear 5,5 clear 5,6 clear 5,7 clear 5,8 clear 5,9
+clear 6,0 clear 6,1 clear 6,2 clear 6,3 clear 6,4 clear 6,5 clear 6,6 clear 6,7 clear 6,8 clear 6,9
+clear 7,0 clear 7,1 clear 7,2 clear 7,3 clear 7,4 clear 7,5 clear 7,6 clear 7,7 clear 7,8 clear 7,9
+clear 8,0 clear 8,1 clear 8,2 clear 8,3 clear 8,4 clear 8,5 clear 8,6 clear 8,7 clear 8,8 clear 8,9
+clear 9,0 clear 9,1 clear 9,2 clear 9,3 clear 9,4 clear 9,5 clear 9,6 clear 9,7 clear 9,8 clear 9,9
+return home
+
+chapter ClearNew
+clear N0,0 clear N0,1 clear N0,2 clear N0,3 clear N0,4 clear N0,5 clear N0,6 clear N0,7 clear N0,8 clear N0,9
+clear N1,0 clear N1,1 clear N1,2 clear N1,3 clear N1,4 clear N1,5 clear N1,6 clear N1,7 clear N1,8 clear N1,9
+clear N2,0 clear N2,1 clear N2,2 clear N2,3 clear N2,4 clear N2,5 clear N2,6 clear N2,7 clear N2,8 clear N2,9
+clear N3,0 clear N3,1 clear N3,2 clear N3,3 clear N3,4 clear N3,5 clear N3,6 clear N3,7 clear N3,8 clear N3,9
+clear N4,0 clear N4,1 clear N4,2 clear N4,3 clear N4,4 clear N4,5 clear N4,6 clear N4,7 clear N4,8 clear N4,9
+clear N5,0 clear N5,1 clear N5,2 clear N5,3 clear N5,4 clear N5,5 clear N5,6 clear N5,7 clear N5,8 clear N5,9
+clear N6,0 clear N6,1 clear N6,2 clear N6,3 clear N6,4 clear N6,5 clear N6,6 clear N6,7 clear N6,8 clear N6,9
+clear N7,0 clear N7,1 clear N7,2 clear N7,3 clear N7,4 clear N7,5 clear N7,6 clear N7,7 clear N7,8 clear N7,9
+clear N8,0 clear N8,1 clear N8,2 clear N8,3 clear N8,4 clear N8,5 clear N8,6 clear N8,7 clear N8,8 clear N8,9
+clear N9,0 clear N9,1 clear N9,2 clear N9,3 clear N9,4 clear N9,5 clear N9,6 clear N9,7 clear N9,8 clear N9,9
+return home
+
+chapter ClearXYxyz
+clear X0, clear X1, clear X2, clear Y0, clear Y1, clear Y2, set X3 set Y3
+clear x0 clear x1 clear x2 clear x3 clear y0 clear y1 clear y2 clear y3 clear z0 clear z1 clear z2 clear z3 clear xy clear XY
+return home
+
+chapter CheckIf
+if $,0 set 0
+if $,1 set 1
+if $,2 set 2
+if $,3 set 3
+if $,4 set 4
+if $,5 set 5
+if $,6 set 6
+if $,7 set 7
+if $,8 set 8
+if $,9 set 9
+return home
+
+chapter Clear0to9
+clear 0 clear 1 clear 2 clear 3 clear 4 clear 5 clear 6 clear 7 clear 8 clear 9
+return home
+
+# Here are items that you can select #
+
+chapter Glider
+visit ClearFirst
+visit ClearNew
+set 1,6 set 2,6 set 3,6 set 3,7 set 2,8
+visit ClearXYxyz
+goto Start
+
+chapter Blinker
+visit ClearFirst
+visit ClearNew
+set 4,4 set 4,5 set 4,6
+visit ClearXYxyz
+goto Start
+
+chapter Toad
+visit ClearFirst
+visit ClearNew
+set 3,4 set 4,4 set 4,5 set 5,4 set 5,5 set 6,5
+visit ClearXYxyz
+goto Start
+
+chapter Beacon
+visit ClearFirst
+visit ClearNew
+set 3,3 set 3,4 set 4,3 set 4,4 set 5,5 set 5,6 set 6,5 set 6,6
+visit ClearXYxyz
+goto Start
+
+chapter R-pentomino
+visit ClearFirst
+visit ClearNew
+set 3,4 set 4,3 set 4,4 set 4,5 set 5,5 
+visit ClearXYxyz
+goto Start
+
+chapter My-Conway
+visit ClearFirst
+visit ClearNew
+visit show-board
+goto ask
+
+chapter ask
+prompt Set+Your+Dot+(Start:+conway):+
+>
+on conway goto Start
+
+on a on 1 set a1 set 1,1
+on a on 2 set a2 set 2,1
+on a on 3 set a3 set 3,1
+on a on 4 set a4 set 4,1
+on a on 5 set a5 set 5,1
+on a on 6 set a6 set 6,1
+on a on 7 set a7 set 7,1
+on a on 8 set a8 set 8,1
+
+on b on 1 set b1 set 1,2
+on b on 2 set b2 set 2,2
+on b on 3 set b3 set 3,2
+on b on 4 set b4 set 4,2
+on b on 5 set b5 set 5,2
+on b on 6 set b6 set 6,2
+on b on 7 set b7 set 7,2
+on b on 8 set b8 set 8,2
+
+on c on 1 set c1 set 1,3
+on c on 2 set c2 set 2,3
+on c on 3 set c3 set 3,3
+on c on 4 set c4 set 4,3
+on c on 5 set c5 set 5,3
+on c on 6 set c6 set 6,3
+on c on 7 set c7 set 7,3
+on c on 8 set c8 set 8,3
+
+on d on 1 set d1 set 1,4
+on d on 2 set d2 set 2,4
+on d on 3 set d3 set 3,4
+on d on 4 set d4 set 4,4
+on d on 5 set d5 set 5,4
+on d on 6 set d6 set 6,4
+on d on 7 set d7 set 7,4
+on d on 8 set d8 set 8,4
+
+on e on 1 set e1 set 1,5
+on e on 2 set e2 set 2,5
+on e on 3 set e3 set 3,5
+on e on 4 set e4 set 4,5
+on e on 5 set e5 set 5,5
+on e on 6 set e6 set 6,5
+on e on 7 set e7 set 7,5
+on e on 8 set e8 set 8,5
+
+on f on 1 set f1 set 1,6
+on f on 2 set f2 set 2,6
+on f on 3 set f3 set 3,6
+on f on 4 set f4 set 4,6
+on f on 5 set f5 set 5,6
+on f on 6 set f6 set 6,6
+on f on 7 set f7 set 7,6
+on f on 8 set f8 set 8,6
+
+on g on 1 set g1 set 1,7
+on g on 2 set g2 set 2,7
+on g on 3 set g3 set 3,7
+on g on 4 set g4 set 4,7
+on g on 5 set g5 set 5,7
+on g on 6 set g6 set 6,7
+on g on 7 set g7 set 7,7
+on g on 8 set g8 set 8,7
+
+on h on 1 set h1 set 1,8
+on h on 2 set h2 set 2,8
+on h on 3 set h3 set 3,8
+on h on 4 set h4 set 4,8
+on h on 5 set h5 set 5,8
+on h on 6 set h6 set 6,8
+on h on 7 set h7 set 7,8
+on h on 8 set h8 set 8,8
+
+visit show-board
+goto ask
+
+end game
+
+chapter show-row
+print +$+
+if $1 print |+@+
+unless $1 print |+++
+if $2 print |+@+
+unless $2 print |+++
+if $3 print |+@+
+unless $3 print |+++
+if $4 print |+@+
+unless $4 print |+++
+if $5 print |+@+
+unless $5 print |+++
+if $6 print |+@+
+unless $6 print |+++
+if $7 print |+@+
+unless $7 print |+++
+if $8 print |+@+
+unless $8 print |+++
+println |
+return home
+
+chapter show-board
+goto h
+chapter h
+>     1   2   3   4   5   6   7   8  
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+goto g
+chapter g
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+goto f
+chapter f
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+goto e
+chapter e
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+goto d
+chapter d
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+goto c
+chapter c
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+goto b
+chapter b
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+goto a
+chapter a
+>   *---*---*---*---*---*---*---*---*
+visit show-row
+>   *---*---*---*---*---*---*---*---*
+return home
